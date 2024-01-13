@@ -37,8 +37,8 @@ async def stream_from_yt(id: str, format: str = "best", sl: str = None):
         "-o", "-", 
         # specify output format
         "-f", format,
-        # matroska just allows every format possible
-        "--merge-output-format", "mkv"
+        # migrating to allowing mp4 only
+        "--merge-output-format", "mp4"
     ]
 
 
@@ -55,7 +55,8 @@ async def stream_from_yt(id: str, format: str = "best", sl: str = None):
         print(f'[{id}]: embedded subtitles requested for {id} in language {sl}, downloading now')
         sub_fname = download_subs(id, sl)
         print(f'[{id}]: injecting subtitles from {sub_fname} to output stream')
-    
+
+        #migrating to allow mp4 only
         f_args = [
             "ffmpeg",
             "-i", "pipe:",
@@ -63,7 +64,7 @@ async def stream_from_yt(id: str, format: str = "best", sl: str = None):
             "-i", sub_fname,
             "-c", "copy",
             "-c:s", "srt",
-            "-f", "matroska",
+            "-f", "mp4",
             "pipe:"
         ]
 
